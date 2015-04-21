@@ -1,19 +1,61 @@
 package ch.hslu.bierapp;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import java.sql.Date;
+
+import ch.hslu.bierapp.db.Beer;
+import ch.hslu.bierapp.db.DBAdapter;
 
 
 public class AddBeerActivity extends ActionBarActivity {
+    private DBAdapter dbAdapter;
+
+    public void addBeer(View v) {
+        EditText inputName = (EditText) findViewById(R.id.addBeer_editText_title);
+        String beerName = inputName.getText().toString().trim();
+        if(beerName.isEmpty()) {
+            Toast.makeText(this, "Bitte Name eingeben!", Toast.LENGTH_LONG).show();
+            return;
+        }
+        Beer beer = new Beer();
+        beer.setTitle(beerName);
+        beer.setDateAdded(new Date(System.currentTimeMillis()));
+        if(dbAdapter.insertBeer(beer)) {
+            Toast.makeText(this, beer.getTitle() + " wurde gespeichert", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, "Fehler beim Speichern!", Toast.LENGTH_LONG).show();
+        }
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_beer);
+
+        dbAdapter = new DBAdapter(this);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        dbAdapter.open();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        dbAdapter.close();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

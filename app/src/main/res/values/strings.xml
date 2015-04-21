@@ -4,4 +4,24 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_add_beer">AddBeerActivity</string>
+
+    <string name="addBeer_title">Bier hinzufügen</string>
+    <string name="addBeer_label_title">Name *</string>
+    <string name="addBeer_label_brewery">Brauerei</string>
+    <string name="addBeer_label_origin">Herkunft</string>
+    <string name="addBeer_label_alcoholContent">Alkoholgehalt</string>
+    <string name="addBeer_label_calories">Kalorien</string>
+    <string name="addBeer_label_text">Beschreibung</string>
+    <string name="addBeer_label_rating">Bewertung</string>
+    <string name="addBeer_label_image">Produktbild</string>
+    <string name="addBeer_btn_save">Speichern</string>
+
+    <string name="showBeer_label_title">Name</string>
+    <string name="showBeer_label_brewery">Brauerei</string>
+    <string name="showBeer_label_origin">Herkunft</string>
+    <string name="showBeer_label_alcoholContent">Alkoholgehalt</string>
+    <string name="showBeer_label_calories">Kalorien</string>
+    <string name="showBeer_label_text">Beschreibung</string>
+    <string name="showBeer_label_dateAdded">Hinzugefügt am</string>
+    <string name="showBeer_label_rating">persönliche Bewertung</string>
 </resources>

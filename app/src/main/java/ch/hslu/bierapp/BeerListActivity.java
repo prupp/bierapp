@@ -1,12 +1,19 @@
 package ch.hslu.bierapp;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 
 public class BeerListActivity extends ActionBarActivity {
+
+    public void startAddBeer(View v) {
+        Intent addBier = new Intent(this, AddBeerActivity.class);
+        startActivity(addBier);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
