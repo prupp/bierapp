@@ -1,8 +1,9 @@
 package ch.hslu.bierapp;
 
-import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,11 +13,13 @@ import android.widget.Toast;
 
 import java.sql.Date;
 
-import ch.hslu.bierapp.db.Beer;
+import ch.hslu.bierapp.common.Beer;
 import ch.hslu.bierapp.db.DBAdapter;
+import ch.hslu.bierapp.webservice.AsyncHTTPRequest;
+import ch.hslu.bierapp.webservice.IAsyncHTTPRequest;
 
 
-public class AddBeerActivity extends ActionBarActivity {
+public class AddBeerActivity extends ActionBarActivity implements IAsyncHTTPRequest {
     private DBAdapter dbAdapter;
 
     public void addBeer(View v) {
@@ -36,11 +39,33 @@ public class AddBeerActivity extends ActionBarActivity {
         }
     }
 
+    public void showEnterNameDialog() {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setTitle("Online Informationen laden");
+        alert.setMessage("Durch Eingabe eines Biernamens werden Informationen aus dem Internet geladen. Ist dies nicht gewünscht, 'Cancel' betätigen.");
+
+        final EditText input = new EditText(this);
+        alert.setView(input);
+
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                callWebservice(input.getText().toString());
+            }
+        });
+
+        alert.setNegativeButton("Cancel", null);
+
+        alert.show();
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_beer);
+
+        this.showEnterNameDialog();
 
         dbAdapter = new DBAdapter(this);
     }
@@ -77,5 +102,16 @@ public class AddBeerActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void callWebservice(String resource) {
+        AsyncHTTPRequest httpRequest = new AsyncHTTPRequest();
+        httpRequest.setDelegate(this);
+        httpRequest.execute(resource);
+    }
+
+    @Override
+    public void webserviceResponse(String response) {
+        Log.d("DEBUG::HTTPResponse ", response);
     }
 }

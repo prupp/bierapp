@@ -1,4 +1,4 @@
-package ch.hslu.bierapp.db;
+package ch.hslu.bierapp.common;
 
 import java.sql.Date;
 
@@ -16,6 +16,11 @@ public class Beer {
     private double rating;
     private int calories;
     private Date dateAdded;
+
+    // Webservice Stuff
+    private String beerRestUrl;
+    private String beerRestid;
+    private String breweryRestUrl;
 
     public long getId() {
         return id;
@@ -96,4 +101,16 @@ public class Beer {
     public void setDateAdded(Date dateAdded) {
         this.dateAdded = dateAdded;
     }
+
+    public String getBeerRestUrl() { return beerRestUrl; }
+
+    public void setBeerRestUrl(String beerRestUrl) { this.beerRestUrl = beerRestUrl; }
+
+    public String getBeerRestid() { return beerRestid; }
+
+    public void setBeerRestid(String beerRestid) { this.beerRestid = beerRestid; }
+
+    public String getBreweryRestUrl() { return breweryRestUrl; }
+
+    public void setBreweryRestUrl(String breweryRestUrl) { this.breweryRestUrl = breweryRestUrl; }
 }

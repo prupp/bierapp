@@ -10,6 +10,8 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import ch.hslu.bierapp.common.Beer;
+
 public class DBAdapter {
     public static final String DB_NAME = "bierapp";
     public static final int DB_VERSION = 1;
@@ -57,7 +59,7 @@ public class DBAdapter {
 
     /**
      * Insert a new beer in the database
-     * @param beer The {@link ch.hslu.bierapp.db.Beer} to insert
+     * @param beer The {@link ch.hslu.bierapp.common.Beer} to insert
      * @return True on success, false otherwise
      */
     public boolean insertBeer(final Beer beer) {
@@ -83,7 +85,7 @@ public class DBAdapter {
 
     /**
      * Get a cursor of all beers in the database
-     * @return List of {@link ch.hslu.bierapp.db.Beer}s
+     * @return List of {@link ch.hslu.bierapp.common.Beer}s
      */
     public Cursor getBeersCursor() {
         final Cursor result = db.query(TABLE_BEERS, FIELDS_ALL, null, null, null, null, null);
@@ -92,7 +94,7 @@ public class DBAdapter {
 
     /**
      * Get a list of all beers in the database
-     * @return List of {@link ch.hslu.bierapp.db.Beer}s
+     * @return List of {@link ch.hslu.bierapp.common.Beer}s
      */
     public List<Beer> getBeers() {
         final List<Beer> allBeers = new ArrayList<>();
@@ -107,7 +109,7 @@ public class DBAdapter {
     /**
      * Get a beer with a specific id.
      * @param id The id of the beer
-     * @return The {@link ch.hslu.bierapp.db.Beer} with the given id. Null if not found.
+     * @return The {@link ch.hslu.bierapp.common.Beer} with the given id. Null if not found.
      */
     public Beer getBeer(final long id) {
         Beer beer = null;
@@ -121,7 +123,7 @@ public class DBAdapter {
 
     /**
      * Update a beer in the database
-     * @param beer The {@link ch.hslu.bierapp.db.Beer} to update
+     * @param beer The {@link ch.hslu.bierapp.common.Beer} to update
      * @return True on success, false otherwise
      */
     public boolean updateBeer(final Beer beer) {
@@ -140,7 +142,7 @@ public class DBAdapter {
 
     /**
      * Delete a beer from the database
-     * @param id The id of the {@link ch.hslu.bierapp.db.Beer} to delete
+     * @param id The id of the {@link ch.hslu.bierapp.common.Beer} to delete
      * @return True on success, false otherwiese
      */
     public boolean deleteBeer(final long id) {
