@@ -23,6 +23,10 @@
             android:name=".AddBeerActivity"
             android:label="@string/title_activity_add_beer" >
         </activity>
+        <activity
+            android:name=".BeerDetailActivity"
+            android:label="@string/title_activity_beer_detail" >
+        </activity>
     </application>
 
 </manifest>

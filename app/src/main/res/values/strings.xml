@@ -25,4 +25,5 @@
     <string name="showBeer_label_text">Beschreibung</string>
     <string name="showBeer_label_dateAdded">Hinzugefügt am</string>
     <string name="showBeer_label_rating">persönliche Bewertung</string>
+    <string name="title_activity_beer_detail">BeerDetailActivity</string>
 </resources>

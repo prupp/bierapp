@@ -31,7 +31,7 @@
                 android:id="@+id/textView_lblTitle" />
 
             <EditText
-                android:layout_width="fill_parent"
+                android:layout_width="255dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/addBeer_editText_title" />
 
@@ -42,7 +42,7 @@
                 android:id="@+id/textView_lblBrewery" />
 
             <EditText
-                android:layout_width="match_parent"
+                android:layout_width="255dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/addBeer_editText_brewery" />
 
@@ -53,7 +53,7 @@
                 android:id="@+id/textView_lblOrigin" />
 
             <EditText
-                android:layout_width="match_parent"
+                android:layout_width="254dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/addBeer_editText_origin" />
 
@@ -64,7 +64,7 @@
                 android:id="@+id/textView_lblAlcoholContent" />
 
             <EditText
-                android:layout_width="match_parent"
+                android:layout_width="252dp"
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
                 android:ems="10"
@@ -77,7 +77,7 @@
                 android:id="@+id/textView_lblCalories" />
 
             <EditText
-                android:layout_width="match_parent"
+                android:layout_width="255dp"
                 android:layout_height="wrap_content"
                 android:inputType="number"
                 android:ems="10"
@@ -90,7 +90,7 @@
                 android:id="@+id/textView_lblText" />
 
             <EditText
-                android:layout_width="match_parent"
+                android:layout_width="255dp"
                 android:layout_height="wrap_content"
                 android:inputType="textMultiLine"
                 android:ems="10"
@@ -114,7 +114,7 @@
             android:layout_height="wrap_content"
             android:text="@string/addBeer_btn_save"
             android:id="@+id/button_save"
-            android:onClick="addBeer" />
+            android:onClick="addBeerToDB" />
 
     </LinearLayout>
 

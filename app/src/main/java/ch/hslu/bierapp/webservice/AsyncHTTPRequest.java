@@ -17,7 +17,7 @@ public class AsyncHTTPRequest extends AsyncTask<String, Integer, String> {
     private IAsyncHTTPRequest delegate;
     private static final String BASE_URL = "http://ratebeer.duckdns.org:8080/beers";
 
-    public void setDelegate(IAsyncHTTPRequest delegate) {
+    public AsyncHTTPRequest(IAsyncHTTPRequest delegate) {
         this.delegate = delegate;
     }
 
@@ -40,7 +40,11 @@ public class AsyncHTTPRequest extends AsyncTask<String, Integer, String> {
                 total.append(line);
             }
 
-            return total.toString();
+
+            String str = total.toString().replace("\\\\", "\\");
+            byte[] utf8 = str.getBytes("UTF-8");
+
+            return new String(utf8, "UTF-8");
         }catch(Exception e){
             Log.w("BierApp:AsyncHTTPReques", "Unable to execute Request due to " + e.toString());
             return null;
@@ -48,7 +52,7 @@ public class AsyncHTTPRequest extends AsyncTask<String, Integer, String> {
     }
 
     protected void onProgressUpdate(Integer... params){
-        //Update a progress bar here, or ignore it, it's up to you
+        //Update a progress bar here
     }
 
     protected void onPostExecute(String response){
@@ -64,7 +68,7 @@ public class AsyncHTTPRequest extends AsyncTask<String, Integer, String> {
      */
     private String createURL(String restResource) {
 
-        restResource = restResource.toLowerCase().replaceAll("ü", "u").replaceAll("ö","o").replaceAll("ä","a");
+        restResource = restResource.toLowerCase().replaceAll("ü", "u").replaceAll("ö","o").replaceAll("ä","a").replaceAll(" ", "%20");
 
         if(restResource.isEmpty() || restResource.charAt(0) != '/') {
             restResource = "/" + restResource;

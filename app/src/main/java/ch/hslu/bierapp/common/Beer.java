@@ -19,7 +19,7 @@ public class Beer {
 
     // Webservice Stuff
     private String beerRestUrl;
-    private String beerRestid;
+    private String beerRestId;
     private String breweryRestUrl;
 
     public long getId() {
@@ -106,9 +106,9 @@ public class Beer {
 
     public void setBeerRestUrl(String beerRestUrl) { this.beerRestUrl = beerRestUrl; }
 
-    public String getBeerRestid() { return beerRestid; }
+    public String getBeerRestId() { return beerRestId; }
 
-    public void setBeerRestid(String beerRestid) { this.beerRestid = beerRestid; }
+    public void setBeerRestId(String beerRestId) { this.beerRestId = beerRestId; }
 
     public String getBreweryRestUrl() { return breweryRestUrl; }
 
