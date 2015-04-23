@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RatingBar;
 import android.widget.Toast;
 
 import java.sql.Date;
@@ -29,6 +30,12 @@ public class AddBeerActivity extends ActionBarActivity implements IAsyncHTTPRequ
 
     public void addBeerToDB(View v) {
         EditText inputName = (EditText) findViewById(R.id.addBeer_editText_title);
+        RatingBar rating = (RatingBar) findViewById(R.id.ratingBar);
+        EditText inputCalories = (EditText) findViewById(R.id.addBeer_editText_calories);
+        EditText inputAlcohol = (EditText) findViewById(R.id.addBeer_editText_alcoholContent);
+        EditText inputOrigin = (EditText) findViewById(R.id.addBeer_editText_origin);
+        EditText inputBrewery = (EditText) findViewById(R.id.addBeer_editText_brewery);
+        EditText inputDescription = (EditText) findViewById(R.id.addBeer_editText_text);
         String beerName = inputName.getText().toString().trim();
         if(beerName.isEmpty()) {
             Toast.makeText(this, "Bitte Name eingeben!", Toast.LENGTH_LONG).show();
@@ -37,6 +44,12 @@ public class AddBeerActivity extends ActionBarActivity implements IAsyncHTTPRequ
         Beer beer = new Beer();
         beer.setTitle(beerName);
         beer.setDateAdded(new Date(System.currentTimeMillis()));
+        beer.setRating(rating.getRating());
+        beer.setCalories(Integer.parseInt(inputCalories.getText().toString().trim()));
+        beer.setOrigin(inputOrigin.getText().toString().trim());
+        beer.setBrewery(inputBrewery.getText().toString().trim());
+        beer.setAlcoholContent(Double.parseDouble(inputAlcohol.getText().toString().trim()));
+        beer.setText(inputDescription.getText().toString().trim());
         if(dbAdapter.insertBeer(beer)) {
             Toast.makeText(this, beer.getTitle() + " wurde gespeichert", Toast.LENGTH_LONG).show();
         } else {
@@ -208,26 +221,28 @@ public class AddBeerActivity extends ActionBarActivity implements IAsyncHTTPRequ
 
     @Override
     public void webserviceResponse(String response) {
-        Log.d("DEBUG::HTTPResponse ", response);
+        if(response != null) {
+            Log.d("DEBUG::HTTPResponse ", response);
 
-        if(JsonParser.isBrewery(response)) {
-            this.addOriginTextFields(JsonParser.getOrigin(response));
-        }
-        else if(JsonParser.isSingleBeer(response)) {
-            Beer beer = JsonParser.getBeerFromJson(response);
-            this.fillAddBeerTextFields(beer);
-            callWebservice(beer.getBreweryRestUrl());
-        }
-        else {
-            List<Beer> beerList = JsonParser.getAllBeersFromJson(response);
-            if(beerList.isEmpty()) {
-                showEmptyDialog();
+            if(JsonParser.isBrewery(response)) {
+                this.addOriginTextFields(JsonParser.getOrigin(response));
             }
-            else  if (beerList.size() == 1) {
-                callWebservice(beerList.get(0).getBeerRestUrl());
+            else if(JsonParser.isSingleBeer(response)) {
+                Beer beer = JsonParser.getBeerFromJson(response);
+                this.fillAddBeerTextFields(beer);
+                callWebservice(beer.getBreweryRestUrl());
             }
             else {
-                showSelectBeerDialog(beerList);
+                List<Beer> beerList = JsonParser.getAllBeersFromJson(response);
+                if(beerList.isEmpty()) {
+                    showEmptyDialog();
+                }
+                else  if (beerList.size() == 1) {
+                    callWebservice(beerList.get(0).getBeerRestUrl());
+                }
+                else {
+                    showSelectBeerDialog(beerList);
+                }
             }
         }
     }

@@ -5,14 +5,53 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import java.util.List;
+
+import ch.hslu.bierapp.common.Beer;
+import ch.hslu.bierapp.db.DBAdapter;
+import ch.hslu.bierapp.listadapter.BeerListAdapter;
 
 
 public class BeerListActivity extends ActionBarActivity {
+    private DBAdapter dbAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beer_list);
+
+        dbAdapter = new DBAdapter(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        dbAdapter.open();
+
+        List<Beer> beerList = dbAdapter.getBeers();
+
+        ListView listView = (ListView) findViewById(R.id.beer_list);
+        BeerListAdapter customAdapter = new BeerListAdapter(this, R.layout.beer_list_row, beerList);
+
+        listView.setAdapter(customAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Beer beer = (Beer) parent.getItemAtPosition(position);
+                Toast.makeText(getBaseContext(), beer.getTitle() + " ausgewählt", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        dbAdapter.close();
     }
 
 
