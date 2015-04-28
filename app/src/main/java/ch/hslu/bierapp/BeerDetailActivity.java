@@ -4,17 +4,19 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.support.v7.app.ActionBarActivity;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import java.io.InputStream;
 
 import ch.hslu.bierapp.common.Beer;
 import ch.hslu.bierapp.db.DBAdapter;
@@ -36,7 +38,12 @@ public class BeerDetailActivity extends ActionBarActivity {
         RatingBar rating = (RatingBar)findViewById(R.id.ratingBar_detail);
 
         if(beer != null) {
-            img.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.default_beer));
+            String imgUrl = beer.getImageLink();
+            if(imgUrl != null) {
+                new DownloadImageTask(img).execute(beer.getImageLink());
+            } else {
+                img.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.default_beer));
+            }
             title.setText(beer.getTitle());
             brewery.setText(beer.getBrewery());
             origin.setText(beer.getOrigin());
@@ -114,5 +121,53 @@ public class BeerDetailActivity extends ActionBarActivity {
         alert.setNegativeButton("Nein", null);
 
         alert.show();
+    }
+
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            if(result != null) {
+                bmImage.setImageBitmap(resize(result, 150, 150));
+            }
+        }
+
+        private Bitmap resize(Bitmap image, int maxWidth, int maxHeight) {
+            if (maxHeight > 0 && maxWidth > 0) {
+                int width = image.getWidth();
+                int height = image.getHeight();
+                float ratioBitmap = (float) width / (float) height;
+                float ratioMax = (float) maxWidth / (float) maxHeight;
+
+                int finalWidth = maxWidth;
+                int finalHeight = maxHeight;
+                if (ratioMax > 1) {
+                    finalWidth = (int) ((float)maxHeight * ratioBitmap);
+                } else {
+                    finalHeight = (int) ((float)maxWidth / ratioBitmap);
+                }
+                image = Bitmap.createScaledBitmap(image, finalWidth, finalHeight, true);
+                return image;
+            } else {
+                return image;
+            }
+        }
     }
 }

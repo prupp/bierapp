@@ -100,6 +100,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/ratingBar" />
+
         </GridLayout>
 
         <Button
@@ -108,6 +109,12 @@
             android:text="@string/addBeer_btn_save"
             android:id="@+id/button_save"
             android:onClick="addBeerToDB" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/addBeer_editText_img"
+            android:visibility="invisible" />
 
     </LinearLayout>
 

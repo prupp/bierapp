@@ -37,6 +37,7 @@ public class AddBeerActivity extends ActionBarActivity implements IAsyncHTTPRequ
         EditText inputOrigin = (EditText) findViewById(R.id.addBeer_editText_origin);
         EditText inputBrewery = (EditText) findViewById(R.id.addBeer_editText_brewery);
         EditText inputDescription = (EditText) findViewById(R.id.addBeer_editText_text);
+        EditText inputImage = (EditText) findViewById(R.id.addBeer_editText_img);
         String beerName = inputName.getText().toString().trim();
         if(beerName.isEmpty()) {
             Toast.makeText(this, "Bitte Name eingeben!", Toast.LENGTH_LONG).show();
@@ -51,6 +52,7 @@ public class AddBeerActivity extends ActionBarActivity implements IAsyncHTTPRequ
         beer.setBrewery(inputBrewery.getText().toString().trim());
         beer.setAlcoholContent(Double.parseDouble(inputAlcohol.getText().toString().trim()));
         beer.setText(inputDescription.getText().toString().trim());
+        beer.setImageLink(inputImage.getText().toString().trim());
         if(dbAdapter.insertBeer(beer)) {
             Toast.makeText(this, beer.getTitle() + " wurde gespeichert", Toast.LENGTH_LONG).show();
             Intent detailIntent = new Intent(this, BeerDetailActivity.class);
@@ -159,6 +161,7 @@ public class AddBeerActivity extends ActionBarActivity implements IAsyncHTTPRequ
         EditText alcoholContent = (EditText) findViewById(R.id.addBeer_editText_alcoholContent);
         EditText calories = (EditText) findViewById(R.id.addBeer_editText_calories);
         EditText description = (EditText) findViewById(R.id.addBeer_editText_text);
+        EditText image = (EditText) findViewById(R.id.addBeer_editText_img);
 
         name.setText(beer.getTitle());
         brewery.setText(beer.getBrewery());
@@ -166,6 +169,7 @@ public class AddBeerActivity extends ActionBarActivity implements IAsyncHTTPRequ
         alcoholContent.setText(Double.toString(beer.getAlcoholContent()));
         calories.setText(Integer.toString(beer.getCalories()));
         description.setText(beer.getText());
+        image.setText(beer.getImageLink());
     }
 
     private void addOriginTextFields(String origin) {

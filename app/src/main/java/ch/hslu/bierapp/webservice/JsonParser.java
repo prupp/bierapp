@@ -31,6 +31,7 @@ public class JsonParser {
     private static final String TAG_BREWED_AT_URL = "brewed_at_url";
     private static final String TAG_CITY = "city";
     private static final String TAG_COUNTRY = "country";
+    private static final String TAG_IMG = "img";
 
     /**
      * Extracts all beer entries out of a json string.
@@ -88,6 +89,7 @@ public class JsonParser {
             beer.setBreweryRestUrl(jsonBeer.getString(TAG_BREWERY_URL));
             beer.setCalories(jsonBeer.getInt(TAG_CALORIES));
             beer.setText(jsonBeer.getString(TAG_DESCRIPTION));
+            beer.setImageLink(jsonBeer.getString(TAG_IMG));
         } catch (JSONException e) {
             Log.w("BierApp:JsonParser", "Error parsing json get one beer " + e.toString());
         }
