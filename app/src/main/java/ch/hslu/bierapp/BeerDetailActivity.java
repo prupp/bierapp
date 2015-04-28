@@ -1,10 +1,16 @@
 package ch.hslu.bierapp;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -29,15 +35,19 @@ public class BeerDetailActivity extends ActionBarActivity {
         TextView text = (TextView)findViewById(R.id.textView_detail_text);
         RatingBar rating = (RatingBar)findViewById(R.id.ratingBar_detail);
 
-        img.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.default_beer));
-        title.setText(beer.getTitle());
-        brewery.setText(beer.getBrewery());
-        origin.setText(beer.getOrigin());
-        alcoholContent.setText(beer.getAlcoholContent() + " %");
-        calories.setText(beer.getCalories() + " kcal");
-        dateAdded.setText(beer.getDateAdded().toString());
-        text.setText(beer.getText());
-        rating.setRating((float)beer.getRating());
+        if(beer != null) {
+            img.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.default_beer));
+            title.setText(beer.getTitle());
+            brewery.setText(beer.getBrewery());
+            origin.setText(beer.getOrigin());
+            alcoholContent.setText(beer.getAlcoholContent() + " %");
+            calories.setText(beer.getCalories() + " kcal");
+            dateAdded.setText(beer.getDateAdded().toString());
+            text.setText(beer.getText());
+            rating.setRating((float) beer.getRating());
+        } else {
+            Log.w("BierApp:BeerDetail", "Beer was null");
+        }
     }
 
     @Override
@@ -73,16 +83,36 @@ public class BeerDetailActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case R.id.action_edit_beer:
+                Intent intentEdit = new Intent(this, EditBeerActivity.class);
+                intentEdit.putExtra(BeerListActivity.KEY_EXTRA_BEER_ID, beer.getId());
+                startActivity(intentEdit);
+                return true;
+            case R.id.action_delete_beer:
+                showDeleteConfirmDialog(this);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
+    }
 
-        return super.onOptionsItemSelected(item);
+    private void showDeleteConfirmDialog(final Context context) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setTitle("Löschen bestätigen");
+        alert.setMessage("Sind Sie sicher, dass sie " + beer.getTitle() + " löschen möchten?");
+
+        alert.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                dbAdapter.deleteBeer(beer.getId());
+                Intent intentList = new Intent(context, BeerListActivity.class);
+                startActivity(intentList);
+            }
+        });
+
+        alert.setNegativeButton("Nein", null);
+
+        alert.show();
     }
 }

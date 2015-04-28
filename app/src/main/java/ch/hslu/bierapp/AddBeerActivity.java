@@ -3,6 +3,7 @@ package ch.hslu.bierapp;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -52,6 +53,9 @@ public class AddBeerActivity extends ActionBarActivity implements IAsyncHTTPRequ
         beer.setText(inputDescription.getText().toString().trim());
         if(dbAdapter.insertBeer(beer)) {
             Toast.makeText(this, beer.getTitle() + " wurde gespeichert", Toast.LENGTH_LONG).show();
+            Intent detailIntent = new Intent(this, BeerDetailActivity.class);
+            detailIntent.putExtra(BeerListActivity.KEY_EXTRA_BEER_ID, beer.getId());
+            startActivity(detailIntent);
         } else {
             Toast.makeText(this, "Fehler beim Speichern!", Toast.LENGTH_LONG).show();
         }
