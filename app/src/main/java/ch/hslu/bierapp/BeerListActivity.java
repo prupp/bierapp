@@ -18,7 +18,14 @@ import ch.hslu.bierapp.listadapter.BeerListAdapter;
 
 
 public class BeerListActivity extends ActionBarActivity {
+    public static final String KEY_EXTRA_BEER_ID = "beerId";
     private DBAdapter dbAdapter;
+
+    private void showBeerDetailView(Beer beer) {
+        Intent beerDetail = new Intent(this, BeerDetailActivity.class);
+        beerDetail.putExtra(KEY_EXTRA_BEER_ID, beer.getId());
+        startActivity(beerDetail);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +50,7 @@ public class BeerListActivity extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Beer beer = (Beer) parent.getItemAtPosition(position);
-                Toast.makeText(getBaseContext(), beer.getTitle() + " ausgewählt", Toast.LENGTH_SHORT).show();
+                showBeerDetailView(beer);
             }
         });
     }

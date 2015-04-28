@@ -23,7 +23,7 @@
     <string name="showBeer_label_alcoholContent">Alkoholgehalt</string>
     <string name="showBeer_label_calories">Kalorien</string>
     <string name="showBeer_label_text">Beschreibung</string>
-    <string name="showBeer_label_dateAdded">Hinzugefügt am</string>
-    <string name="showBeer_label_rating">persönliche Bewertung</string>
+    <string name="showBeer_label_dateAdded">Hinzugefügt</string>
+    <string name="showBeer_label_rating">Bewertung</string>
     <string name="title_activity_beer_detail">BeerDetailActivity</string>
 </resources>
