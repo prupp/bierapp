@@ -39,7 +39,7 @@ public class BeerDetailActivity extends ActionBarActivity {
 
         if(beer != null) {
             String imgUrl = beer.getImageLink();
-            if(imgUrl != null) {
+            if(imgUrl != null && !imgUrl.trim().isEmpty()) {
                 new DownloadImageTask(img).execute(beer.getImageLink());
             } else {
                 img.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.default_beer));
