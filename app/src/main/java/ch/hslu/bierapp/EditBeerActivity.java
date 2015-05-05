@@ -70,9 +70,7 @@ public class EditBeerActivity extends ActionBarActivity {
         beer.setText(inputDescription.getText().toString().trim());
         if(dbAdapter.updateBeer(beer)) {
             Toast.makeText(this, beer.getTitle() + " wurde aktualisiert", Toast.LENGTH_LONG).show();
-            Intent detailIntent = new Intent(this, BeerDetailActivity.class);
-            detailIntent.putExtra(BeerListActivity.KEY_EXTRA_BEER_ID, beer.getId());
-            startActivity(detailIntent);
+            this.finish();
         } else {
             Toast.makeText(this, "Fehler beim Aktualisieren!", Toast.LENGTH_LONG).show();
         }

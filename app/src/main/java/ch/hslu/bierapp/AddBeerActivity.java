@@ -55,9 +55,7 @@ public class AddBeerActivity extends ActionBarActivity implements IAsyncHTTPRequ
         beer.setImageLink(inputImage.getText().toString().trim());
         if(dbAdapter.insertBeer(beer)) {
             Toast.makeText(this, beer.getTitle() + " wurde gespeichert", Toast.LENGTH_LONG).show();
-            Intent detailIntent = new Intent(this, BeerDetailActivity.class);
-            detailIntent.putExtra(BeerListActivity.KEY_EXTRA_BEER_ID, beer.getId());
-            startActivity(detailIntent);
+            this.finish();
         } else {
             Toast.makeText(this, "Fehler beim Speichern!", Toast.LENGTH_LONG).show();
         }
