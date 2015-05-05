@@ -81,17 +81,49 @@ public class JsonParser {
         JSONObject jsonBeer = null;
         try {
             jsonBeer = new JSONObject(json);
-
-            beer.setBeerRestUrl(jsonBeer.getString(TAG_BREWERY_URL));
-            beer.setTitle(jsonBeer.getString(TAG_NAME));
-            beer.setAlcoholContent(jsonBeer.getDouble(TAG_ABV));
-            beer.setBrewery(jsonBeer.getString(TAG_BREWERY));
-            beer.setBreweryRestUrl(jsonBeer.getString(TAG_BREWERY_URL));
-            beer.setCalories(jsonBeer.getInt(TAG_CALORIES));
-            beer.setText(jsonBeer.getString(TAG_DESCRIPTION));
-            beer.setImageLink(jsonBeer.getString(TAG_IMG));
         } catch (JSONException e) {
             Log.w("BierApp:JsonParser", "Error parsing json get one beer " + e.toString());
+        }
+
+        try {
+            beer.setBeerRestUrl(jsonBeer.getString(TAG_URL));
+        } catch (JSONException e) {
+            Log.w("BierApp:JsonParser", "No Beer URL available.");
+        }
+        try {
+            beer.setTitle(jsonBeer.getString(TAG_NAME));
+        } catch (JSONException e) {
+            Log.w("BierApp:JsonParser", "No Name available.");
+        }
+        try {
+            beer.setAlcoholContent(jsonBeer.getDouble(TAG_ABV));
+        } catch (JSONException e) {
+            Log.w("BierApp:JsonParser", "No ABV available.");
+        }
+        try {
+            beer.setBrewery(jsonBeer.getString(TAG_BREWERY));
+        } catch (JSONException e) {
+            Log.w("BierApp:JsonParser", "No Brewery available.");
+        }
+        try {
+            beer.setBreweryRestUrl(jsonBeer.getString(TAG_BREWERY_URL));
+        } catch (JSONException e) {
+            Log.w("BierApp:JsonParser", "No Brewery URL available.");
+        }
+        try {
+            beer.setCalories(jsonBeer.getInt(TAG_CALORIES));
+        } catch (JSONException e) {
+            Log.w("BierApp:JsonParser", "No Calories available.");
+        }
+        try {
+            beer.setText(jsonBeer.getString(TAG_DESCRIPTION));
+        } catch (JSONException e) {
+            Log.w("BierApp:JsonParser", "No Brewery Descritpion available.");
+        }
+        try {
+            beer.setImageLink(jsonBeer.getString(TAG_IMG));
+        } catch (JSONException e) {
+            Log.w("BierApp:JsonParser", "No Image available.");
         }
 
         return beer;
